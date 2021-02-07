@@ -69,6 +69,7 @@ bool validate_power_of_8(int number)
         // if the expression value is non zero, then it is a power of 4
         while(number != 1)
         {
+            // This is valid since, if the execution reaches here, the number is positive.
             number = number >> 1;
             count++;
         }

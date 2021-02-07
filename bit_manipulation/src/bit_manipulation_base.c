@@ -124,3 +124,91 @@ size_t count_set_bit(size_t number)
     }
     return count;
 }
+
+
+/**
+ * @brief Function to find the most significant set bit
+ * 
+ * @param number Number
+ * @return int bit position: 0 for no set bit
+ */
+// Similar implementation for leading zeros where the return value would be 32/64 - position.
+int find_MSB_set(int number)
+{
+    int position = 0;
+
+    while(number)
+    {
+        // number/2 can be replaced by number >> 2 if the number is positive
+        // if number >> 2 is used when the number is negative, it will do arithmetic shift operation adding 1's on every shift
+        number = number/2;
+        position++;
+    }
+
+    return position;
+}
+
+
+/**
+ * @brief Function to find the least significant set bit
+ * 
+ * @param number 
+ * @return int 
+ */
+// Same implementation for counting trailing zeros
+int find_LSB_set(int number)
+{
+    if (number == 0)
+        return 0;
+
+    int position = 1;
+    while(!(number & 0x01))
+    {
+        // number/2 can be replaced by number >> 2 if the number is positive
+        // if number >> 2 is used when the number is negative, it will do arithmetic shift operation adding 1's on every shift
+        number = number/2;
+        position++;
+    }
+
+    return position;
+}
+
+
+/**
+ * @brief Function to exchange odd and even bits of the number
+ * 
+ * @param number The given number
+ * @return size_t The exchanged number
+ */
+size_t exchange_odd_even_bits(size_t number)
+{
+    // Assuming size_t is 64 bits. 
+    // For generalized function to support 32 bit, generate the value depending on the sizeof(size_t)
+    return ( ((number & 0xAAAAAAAAAAAAAAAA) >> 1) | ((number & 0x5555555555555555) << 1) );
+}
+
+
+/**
+ * @brief Function to reverse the bits of the number
+ * 
+ * @param number The given number
+ * @return size_t The reversed number
+ */
+size_t reverse_bits(size_t number)
+{
+    int size = sizeof(number) * 8;
+    int counter = 1;
+    size_t reversed_value = 0;
+
+    while(number)
+    {
+        if (number & 0x01)
+        {
+            reversed_value |= (1UL << size-counter); 
+        }
+        counter++;
+        number >>= 1;
+    }
+
+    return reversed_value;
+}
