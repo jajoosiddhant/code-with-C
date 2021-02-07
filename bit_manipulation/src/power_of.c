@@ -16,7 +16,7 @@ bool validate_power_of_2(int number)
     bool status = false;
     if (number > 0)
     {
-        // if (number & (number - 1)) is 0, then power of 2
+        // if (number & (number - 1)) is 0, then power of 2 since only one bit is set
         status = (!(number & (number - 1))) ? true : false;
     }
     return status;
@@ -30,7 +30,8 @@ bool validate_power_of_2(int number)
 /**
  * @brief Function to check if a number is a power of 4
  * 
- * @note See: https://www.geeksforgeeks.org/find-whether-a-given-number-is-a-power-of-4-or-not/
+ * @note See: https://www.geeksforgeeks.org/find-whether-a-given-number-is-a-power-of-4-or-not/  
+ * METHOD similar to validate_power_of_8 can also be used here, the modulo operation would be 2.
  * @param number The number
  * @return true 
  * @return false 
@@ -52,14 +53,32 @@ bool validate_power_of_4(int number)
 
 /**
  * @brief Function to check if the number is a power of 8
- * 
+ *
+ * @note See: https://www.geeksforgeeks.org/check-number-power-8-not/ 
+ * METHOD similar to validate_power_of_4 can also be used here, the constant value would be 0xB6DB6DB6.
  * @param number 
  * @return true 
  * @return false 
  */
 bool validate_power_of_8(int number)
 {
+    bool status = false;
+    if (validate_power_of_2(number))
+    {
+        size_t count = 0; 
+        // if the expression value is non zero, then it is a power of 4
+        while(number != 1)
+        {
+            number = number >> 1;
+            count++;
+        }
 
+        printf("Count: %ld\n", count);
+        // If count is a multiple of 3, it is a power of 8
+        status = (count % 3) ? false : true;
+    }
+
+    return status;
 }
 
 /**
