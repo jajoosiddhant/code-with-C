@@ -62,3 +62,9 @@ int find_MSB_set(int number);
 int find_LSB_set(int number);
 size_t exchange_odd_even_bits(size_t number);
 size_t reverse_bits(size_t number);
+
+
+// Decimal-Binary conversion 
+void decimal_to_binary(int number);
+void binary_to_decimal(int number);
+void binary_to_decimal_recursive(int number);

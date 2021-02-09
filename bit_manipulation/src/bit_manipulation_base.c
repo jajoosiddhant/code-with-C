@@ -16,6 +16,7 @@ size_t set_bit(size_t number, size_t bit_position)
     return (number | (1UL << bit_position));
 }
 
+
 /**
  * @brief Clear the bit position
  * 
@@ -28,6 +29,7 @@ size_t clear_bit(size_t number, size_t bit_position)
     return (number & ~(1UL << bit_position)); 
 }
 
+
 /**
  * @brief Toggle the bit position
  * 
@@ -39,6 +41,7 @@ size_t toggle_bit(size_t number, size_t bit_position)
 {
     return (number ^ (1UL << bit_position));
 }
+
 
 /**
  * @brief Set the bit position to a specified value
@@ -54,6 +57,7 @@ size_t set_bit_value(size_t number, size_t bit_position, bool value)
     // and (value << bit_position) will set the bit_position bit to value
     return ((number & ~(1UL << bit_position)) | (value << bit_position)); 
 }
+
 
 /**
  * @brief Function to compute XOR of n consecutive integers
@@ -132,17 +136,24 @@ size_t count_set_bit(size_t number)
  * @param number Number
  * @return int bit position: 0 for no set bit
  */
-// Similar implementation for leading zeros where the return value would be 32/64 - position.
+// Similar implementation for leading zeros where the return value would be 32(4 bytes)/64(8 bytes) - position.
 int find_MSB_set(int number)
 {
+    // Default value if number is 0
     int position = 0;
 
-    while(number)
+    // Handling negative number
+    if (number < 0)
     {
-        // number/2 can be replaced by number >> 2 if the number is positive
-        // if number >> 2 is used when the number is negative, it will do arithmetic shift operation adding 1's on every shift
-        number = number/2;
-        position++;
+        position = sizeof(number) * 8;
+    }
+    else if (number > 0)
+    {
+        while(number)
+        {
+            number = number >> 1;
+            position++;
+        }
     }
 
     return position;
@@ -164,14 +175,17 @@ int find_LSB_set(int number)
     int position = 1;
     while(!(number & 0x01))
     {
-        // number/2 can be replaced by number >> 2 if the number is positive
-        // if number >> 2 is used when the number is negative, it will do arithmetic shift operation adding 1's on every shift
-        number = number/2;
+        // Even if number is negative, it doesn't matter if it keeps adding 1 since we need the least significant bit
+        // Assume corner case 100000....
+        number = number >> 1;
         position++;
     }
 
     return position;
 }
+
+// TODO: Add trailing and leading zeroes
+// TODO: Add leading and trailing ones
 
 
 /**
@@ -183,7 +197,7 @@ int find_LSB_set(int number)
 size_t exchange_odd_even_bits(size_t number)
 {
     // Assuming size_t is 64 bits. 
-    // For generalized function to support 32 bit, generate the value depending on the sizeof(size_t)
+    // For generalized function to support 32 bit, generate the values below depending on the sizeof(size_t)
     return ( ((number & 0xAAAAAAAAAAAAAAAA) >> 1) | ((number & 0x5555555555555555) << 1) );
 }
 
@@ -200,6 +214,7 @@ size_t reverse_bits(size_t number)
     int counter = 1;
     size_t reversed_value = 0;
 
+    // Traversing to find the set bits and reverse only the set bits
     while(number)
     {
         if (number & 0x01)
