@@ -16,6 +16,15 @@ int main()
     
     free(deck);
 
+    int array[6] = {5, 0, 3, 0, 4, 2};
+    bool status = sort_with_end_zero(array, 6);
+    if (status)
+    {
+        for (int i = 0; i < 6; i++)
+        {
+            printf("Array: %d\n", array[i]);
+        }
+    }
     return 0;
 
 }

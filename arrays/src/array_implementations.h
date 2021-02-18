@@ -30,3 +30,7 @@ struct card_deck *init_deck();
 bool shuffle_deck(struct card_deck *deck);
 char deal(struct card_deck *deck);
 const char * identify_card(struct card_deck *deck);
+
+
+// Sort functions
+bool sort_with_end_zero(int *array, size_t size);

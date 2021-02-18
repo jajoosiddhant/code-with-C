@@ -5,8 +5,10 @@
 
 
 // Lookup table based on enum values as index. Lookup table normally consists of key-value pairs
-// Can also be called as hashmap since no key-value pair. key is the enum value obtained.
+// This can also be called as hashmap since no key-value pair. key is the enum value obtained.
 // No need to malloc since we need this as read only and is stored in text segment.
+// const is used since the values are contant values should not be changed
+// static to limit the scope of this lookup table in this translation unit
 static const char * map_enum_to_string[52] = 
 {
     "club_ace", "club_two", "club_three", "club_four", "club_five", "club_six", "club_seven", "club_eight", "club_nine", "club_ten", "club_joker", "club_queen", "club_king",
